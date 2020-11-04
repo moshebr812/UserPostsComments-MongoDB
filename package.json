@@ -1,0 +1,15 @@
+{
+  "name": "userpostscomments-mongodb",
+  "version": "2.0.0",
+  "description": "1st usage MongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "Chow"
+  },
+  "author": "MB812",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongodb": "^3.6.2"
+  }
+}
