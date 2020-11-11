@@ -24,10 +24,31 @@ routerSrv.get('/' , async (request, response) =>{
         });
 });
 
+// get from Products list by family (Name)
+routerSrv.get('/family/:familyName' , async (request, response) =>{
+    let familyName = request.params.familyName;
+    console.log(`\n path = /mosheStore/products/family/:familyName   ${familyName} `);
 
-routerSrv.get('/:family' , async (request, response) =>{
-    let family = request.params.family;
-    console.log(`\n path = /mosheStore/products/:family   ${family} `);
+    const clientConnection = await MongoClient.connect('mongodb://localhost:27017') ; // , {useUnifiedTopology: true});
+    const db = clientConnection.db('mosheStore');
+    const collection = db.collection ('products');
+
+    // let collection = getDbConnection ('mosheStore','products');
+    console.log ('after  calling getDbConnection(dbName, CollectionName)');
+    // console.log ('removed call to establishDbConnection(dbName, CollectionName)');
+    collection
+        .find(
+            {family: familyName},
+        )
+        .toArray( (error, docs) => {
+            // we could use res.json(docs) ==> expliciltly convert iy to json
+            response.json ( docs );
+        });
+});
+
+routerSrv.get('/:id' , async (request, response) =>{
+    let productId = parseInt( request.params.id );
+    console.log(`\n path = /mosheStore/products/:id   ${productId} `);
 
     const clientConnection = await MongoClient.connect('mongodb://localhost:27017', {useUnifiedTopology: true});
     // select database
@@ -38,7 +59,7 @@ routerSrv.get('/:family' , async (request, response) =>{
     
     collection
         .find({
-            family: family,
+            id: productId,
         })
         // toArray is call back.
         .toArray( (error, docs) => {
@@ -47,5 +68,5 @@ routerSrv.get('/:family' , async (request, response) =>{
         });
 });
 
-// //====================================================
+//===================================================================
 module.exports = routerSrv;

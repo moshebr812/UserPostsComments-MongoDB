@@ -3,9 +3,9 @@
 const expressSrv = require('express');
 const routerSrv = expressSrv.Router();  // as we did myApp = expressSrv();
 const fileSrv = require('fs');
-const { getDummy } = require ('./dbService');
-const { getUsers } = require ('./dbService');
-const { getBrands } = require ('./dbService');
+// const { getDummy } = require ('./dbService');
+// const { getUsers } = require ('./dbService');
+// const { getBrands } = require ('./dbService');
 
 usersList =[];
 postsList =[];
@@ -20,8 +20,8 @@ postsList = require('../db-mock/posts.json');
 routerSrv.get('/' , (request, response) =>{
     console.log(`\n routerSrv=Users  path="/"   |usersCount= ${usersList.length}`);
     
-    let check = getDummy();
-    console.log (' ----- ' + check);
+    // let check = getDummy();
+    // console.log (' ----- ' + check);
 
     // (await getBrands())
     // .find(
@@ -50,7 +50,7 @@ routerSrv.get('/:id/posts' ,(request, response) => {
     response.send(filteredPosts);
 })
 
-// Standard Insert. method: POST.  body:  in JSON Format
+// Standard Insert. method: POST.  body:  objet in a Valid in JSON Format
 routerSrv.post('/', (request, response) => {
     // Debug
     console.log (`/users/posts.   request.method: ${request.method}`);

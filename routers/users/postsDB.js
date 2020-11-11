@@ -1,8 +1,9 @@
 // Connecting via DB Services
 const expressSrv = require('express');
+const routerComments = require('../comments');
 const routerSrv = expressSrv.Router();  // as we did myApp = expressSrv();
 //
-const { getPosts } = require ('../dbService');
+const { getPosts, deleteAllPosts } = require ('../dbService');
 
 // All
 routerSrv.get('/' , async (request, response) =>{
@@ -42,4 +43,12 @@ routerSrv.get('/:id' , async (request, response) =>{
 });
 
 
+// Delete All
+routerSrv.delete('/'  ,  async (req, res)  => {
+    console.log(`posts.DB.delete('/')     ---    BEFORE   calling dbService.deleteAllPosts()`);
+    const delPostsStatus = await deleteAllPosts();
+    res.json (delPostsStatus);
+
+    console.log(`posts.DB.delete('/')     ---    AFTER calling dbService.deleteAllPosts(). returned statusObject: \n ${JSON.stringify(delPostsStatus)}`);
+});
 module.exports = routerSrv;

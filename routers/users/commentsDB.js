@@ -9,7 +9,7 @@ routerSrv.get('/' , async (request, response) =>{
     console.log(`\ncommentsDB  path="/"              commentsDB = All `);
     console.log('===============>>> CALLING        (await getComments()) \n');
     const rowLimit = 10;
-    const skipToRow = 51;
+    const skipToRow = 50;
     (await getComments())
         .find(
             { },

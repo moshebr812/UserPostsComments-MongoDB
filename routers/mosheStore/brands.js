@@ -4,15 +4,15 @@ const routerSrv = expressSrv.Router();  // as we did myApp = expressSrv();
 //
 // const {MongoClient} = require('mongodb') ; //. useUnifiedTopology: true);
 // no need to require mongo --> use this service 
-const { getProducts, getBrands, getUsers } = require ('../dbService');
+const { getBrands } = require ('../dbService');
 
 const mongoDbURL = 'mongodb://localhost:27017';
 
 routerSrv.get('/' , async (request, response) =>{
     console.log(`\n routerSrv=/mosheStore/brand  path="/"   All `);
-    console.log('\n ===>>> using (await getBrands()) Since dbConnect returns a promise');
+    console.log('\n ===================>>> using (await getBrands()) Since dbConnect returns a promise');
 
-    (await getUsers())
+    (await getBrands())
         .find(
             {},
             { limit: 0, }  // 0 means NO LIMIT
@@ -26,7 +26,7 @@ routerSrv.get('/' , async (request, response) =>{
 routerSrv.get('/:id' , async (request, response) =>{
     const brandId = request.params.id;
     console.log(`\n routerSrv=/mosheStore/brands    path="/:id"   brandId: ${brandId} `);
-
+    // must await for DB Connection to be established
     (await getBrands())
         .find(
              {
@@ -48,5 +48,22 @@ routerSrv.get('/:id' , async (request, response) =>{
         })
 });
 
+routerSrv.get('/productId/:id' , async (request, response) =>{
+    const productId = parseInt(request.params.id);
+    console.log(`\n path =  /mosheStore/brands/productId/:id    ................   productId: ${productId} `);
+    
+    // must await for DB Connection to be established
+    (await getBrands())
+        .find(
+             {
+                 productId: parseInt(productId),
+             },  // END if
+        )
+        .toArray( (err, docs) => {
+            console.log ('returned rows: '+docs.length);
+            response.json (docs);
+        })
+});
 
+//===================================================================
 module.exports = routerSrv;
