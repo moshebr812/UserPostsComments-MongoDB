@@ -14,7 +14,8 @@ const dbUsers = 'usersChats';
     const collection = db.collection ('products');
 */
 async function dbConnect(dbName, tableName) {
-    const clientSrv = await MongoClient.connect (mongoDbUrl);
+    // Yogev-Q1
+    const clientSrv = await MongoClient.connect (mongoDbUrl ,  {useUnifiedTopology: true});
     const dbClient = clientSrv.db (dbName);  // keep flexibility to define DB name 
     const dbCollection = dbClient.collection ( tableName );
     return dbCollection;
